@@ -1,6 +1,5 @@
 package com.avengers.project.domain;
 
-
 import jakarta.persistence.*;
 import jakarta.persistence.GeneratedValue;
 import lombok.AllArgsConstructor;
@@ -11,13 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class changeRequest {
+public class ChangeRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     //private Integer changeNumber;
     private String changeNumber;
-    private String userID;
     private String applicationID;
     private String otherDepartment1;
     private String otherDepartment2;

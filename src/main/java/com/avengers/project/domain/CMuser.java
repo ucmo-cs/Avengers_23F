@@ -28,6 +28,6 @@ public class CMuser {
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private List<changeRequest> changeRequests = new ArrayList<>();
+    private List<ChangeRequest> ChangeRequests = new ArrayList<>();
 
 }
