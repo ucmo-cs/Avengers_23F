@@ -15,11 +15,13 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
+@Table(name = "users")
 public class CMuser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userID;
+    private Integer id;
+    private String userID;
     private String password;
     private String fName;
     private String lName;

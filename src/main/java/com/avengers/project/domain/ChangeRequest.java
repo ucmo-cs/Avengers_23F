@@ -10,12 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
+@Table(name="changerequest")
 public class ChangeRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //private Integer changeNumber;
-    private String changeNumber;
+    private Integer changeNumber;
+    //private String changeNumber;
     private String applicationID;
     private String otherDepartment1;
     private String otherDepartment2;
@@ -37,7 +38,7 @@ public class ChangeRequest {
 
 
     @ManyToOne
-    @JoinColumn(name = "userID")
+    @JoinColumn(name = "id")
     private CMuser user;
 
 }
