@@ -115,4 +115,14 @@ public class ChangeRequestDao {
             System.out.println("SQL Error executing query: " + query);
         }
     }
+    public void cleanRequest(){
+    String query = "Delete from changerequest where status = null;";
+        try{
+        System.out.println("Trying to execute query: " + query);
+        statement.executeUpdate(query);
+        System.out.println("Success");
+    } catch (SQLException e) {
+        System.out.println("SQL Error executing query: " + query);
+    }
+}
 }

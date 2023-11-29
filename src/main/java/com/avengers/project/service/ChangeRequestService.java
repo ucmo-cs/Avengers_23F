@@ -90,5 +90,8 @@ public class ChangeRequestService {
     public void updateImplementation(int cNumber, String implementationStatus){
         changeRequestDao.updateSingleChangeRequest(cNumber, implementationStatus, "implementation");
     }
+    public void cleanRequest(){
+        changeRequestDao.cleanRequest();
+    }
 }
 

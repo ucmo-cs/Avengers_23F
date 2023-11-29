@@ -11,23 +11,24 @@ import java.sql.SQLException;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class CMuserController {
 
     private final CMuserService cmUserService;
-
+    @CrossOrigin
     @PostMapping("/addUser")
     public ResponseEntity<?> save(@RequestBody CMuser user)
     {
         return new ResponseEntity<>(cmUserService.create(user), HttpStatus.CREATED);
     }
-
+    @CrossOrigin
     @PostMapping("/checkUserLogin")
     public ResponseEntity<?> checkUserLogin(@RequestBody CMuser user ) {
         boolean isGoodLogin = cmUserService.isGoodLogin(user.getUserID(), user.getPassword());
 
         if (isGoodLogin) {
             CMuser goodUser = cmUserService.getUser(user.getUserID());
-            return new ResponseEntity(goodUser,HttpStatus.FOUND);
+            return new ResponseEntity(goodUser, HttpStatus.OK);
         }
         else {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
