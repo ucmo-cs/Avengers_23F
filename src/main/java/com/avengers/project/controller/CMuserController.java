@@ -19,7 +19,12 @@ public class CMuserController {
     @PostMapping("/addUser")
     public ResponseEntity<?> save(@RequestBody CMuser user)
     {
-        return new ResponseEntity<>(cmUserService.create(user), HttpStatus.CREATED);
+        if(user.getUserID()!=null&&user.getPassword()!=null) {
+            return new ResponseEntity<>(cmUserService.create(user), HttpStatus.CREATED);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
     @CrossOrigin
     @PostMapping("/checkUserLogin")

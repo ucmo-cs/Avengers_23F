@@ -142,4 +142,12 @@ public class ChangeRequestController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
+
+    @CrossOrigin
+    @GetMapping("/getCompletedRequest")
+    public ResponseEntity<List<ChangeRequest>> getCompletedRequests()
+    {
+        return new ResponseEntity<List<ChangeRequest>>(changeRequestService.getCompletedRequest(), HttpStatus.OK);
+    }
+
 }
