@@ -38,6 +38,15 @@ public class ChangeRequestService {
         return list;
     }
 
+    public List<ChangeRequest> getCompletedRequest(){
+        List<ChangeRequest> list =  changeRequestDao.getCompletedRequest();
+        for(int i = 0; i< list.size();i++) {
+            Optional<ChangeRequest> changeRequest = (changeRequestRepository.findById(list.get(i).getChangeNumber()));
+            list.get(i).setUser(changeRequest.get().getUser());
+        }
+        return list;
+    }
+
     public Optional<ChangeRequest> viewOneChangeRequest(int changeNumber){
 
         return changeRequestRepository.findById(changeNumber);
@@ -64,16 +73,13 @@ public class ChangeRequestService {
                 status = "frozen";
                 break;
             case "frozen":
-                status = "application";
-                break;
-            case "application":
                 status = "department";
                 break;
             case "department":
-                status = "operations";
+                status = "application";
                 break;
-            case "operations":
-                status = "complete";
+            case "application":
+                status = "completed";
                 break;
             default:
                 status = null;
@@ -89,6 +95,9 @@ public class ChangeRequestService {
     }
     public void updateImplementation(int cNumber, String implementationStatus){
         changeRequestDao.updateSingleChangeRequest(cNumber, implementationStatus, "implementation");
+    }
+    public void cleanRequest(){
+        changeRequestDao.cleanRequest();
     }
 }
 

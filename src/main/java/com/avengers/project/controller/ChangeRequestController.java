@@ -14,24 +14,26 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class ChangeRequestController {
 
     private final ChangeRequestService changeRequestService;
-
+    @CrossOrigin
     @PostMapping("/addChangeRequest/{userID}")
     public ResponseEntity<?> change(@RequestBody ChangeRequest changeRequest, @PathVariable String userID)
     {
+        changeRequest.setStatus("frozen");
         return new ResponseEntity<>(changeRequestService.create(changeRequest, userID), HttpStatus.CREATED);
     }
-
+    @CrossOrigin
     @GetMapping("/getChangeRequest/{userID}")
     public ResponseEntity<List<ChangeRequest>> getViewableRequest(@PathVariable String userID)
     {
         return new ResponseEntity<List<ChangeRequest>>(changeRequestService.getViewableRequest(userID), HttpStatus.OK);
     }
-
+    @CrossOrigin
     @GetMapping("/viewOneChangeRequest/{changeNumber}")
-    public ResponseEntity<?> viewOneRequest(@PathVariable String changeNumber) {
+    public ResponseEntity<?> viewOneRequest(@PathVariable String changeNumber, String column, String value) {
 
         try {
            int cNumber = Integer.parseInt(changeNumber);
@@ -40,7 +42,7 @@ public class ChangeRequestController {
             return new ResponseEntity<>(HttpStatus.SEE_OTHER);
         }
     }
-
+    @CrossOrigin
     @PostMapping("/updateStatus/{changeNumber}/status/{status}")
     public ResponseEntity<?> updateStatus(@PathVariable String changeNumber, @PathVariable String status){
         try {
@@ -51,6 +53,7 @@ public class ChangeRequestController {
             return new ResponseEntity<>(HttpStatus.SEE_OTHER);
         }
     }
+    @CrossOrigin
     @PostMapping("/updateStatus/{changeNumber}/approved")
     public ResponseEntity<?> updateStatusApproved(@PathVariable String changeNumber){
         try {
@@ -61,6 +64,7 @@ public class ChangeRequestController {
             return new ResponseEntity<>(HttpStatus.SEE_OTHER);
         }
     }
+    @CrossOrigin
     @PostMapping("/updateStatus/{changeNumber}/denied")
     public ResponseEntity<?> updateStatusDenied(@PathVariable String changeNumber){
         try {
@@ -71,7 +75,7 @@ public class ChangeRequestController {
             return new ResponseEntity<>(HttpStatus.SEE_OTHER);
         }
     }
-
+    @CrossOrigin
     @PostMapping("/updateImplStart/changeNumber/{changeNumber}/startTime/{startTime}")
     public ResponseEntity<?> updateImplStart(@PathVariable String changeNumber, @PathVariable String startTime){
         try {
@@ -88,7 +92,7 @@ public class ChangeRequestController {
             return new ResponseEntity<>(HttpStatus.SEE_OTHER);
         }
     }
-
+    @CrossOrigin
     @PostMapping("/updateImplementor/changeNumber/{changeNumber}/implementor/{implementorName}")
     public ResponseEntity<?> updateImplementor(@PathVariable String changeNumber, @PathVariable String implementorName){
         try {
@@ -101,6 +105,7 @@ public class ChangeRequestController {
             return new ResponseEntity<>(HttpStatus.SEE_OTHER);
         }
     }
+    @CrossOrigin
     @PostMapping("/updateImplementationStatus/changeNumber/{changeNumber}/success")
     public ResponseEntity<?> updateImplementationSuccess(@PathVariable String changeNumber){
         try {
@@ -113,6 +118,7 @@ public class ChangeRequestController {
             return new ResponseEntity<>(HttpStatus.SEE_OTHER);
         }
     }
+    @CrossOrigin
     @PostMapping("/updateImplementationStatus/changeNumber/{changeNumber}/failure")
     public ResponseEntity<?> updateImplementationFailure(@PathVariable String changeNumber){
         try {
@@ -125,4 +131,23 @@ public class ChangeRequestController {
             return new ResponseEntity<>(HttpStatus.SEE_OTHER);
         }
     }
+
+    @CrossOrigin
+    @PostMapping
+    public ResponseEntity<?> cleanRequest(){
+        try {
+            changeRequestService.cleanRequest();
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
+
+    @CrossOrigin
+    @GetMapping("/getCompletedRequest")
+    public ResponseEntity<List<ChangeRequest>> getCompletedRequests()
+    {
+        return new ResponseEntity<List<ChangeRequest>>(changeRequestService.getCompletedRequest(), HttpStatus.OK);
+    }
+
 }
